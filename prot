@@ -1,0 +1,72 @@
+--[[
+
+Mr_Ther
+@MrTher#2165
+
+extremely early version (legit 30mins of work lol), let me know if something isn't working
+
+19/10/20
+
+]]--
+local proton = {}
+
+local classes = require(script.Modules.Classes)
+local errors = require(script.Modules.Errors)
+local events = require(script.Modules.Events)
+
+local function has_property(instance, property)
+	local clone = instance:Clone()
+	clone:ClearAllChildren()
+
+	return (pcall(function()
+		return clone[property]
+  end))
+end
+
+proton.draw = function(class,data)
+	if table.find(classes,tostring(class)) then
+		if data ~= nil then
+			local instance = Instance.new(class)
+			for property,value in pairs(data) do
+				if has_property(instance,tostring(property)) then
+					instance[property] = value
+				else
+					return warn(errors["nil property"])
+				end
+			end
+			return instance
+		else
+			return warn(errors["nil data"])
+		end
+	else
+		return warn(errors["nil class"])
+	end
+end
+
+proton.render = function(instance)
+	if has_property(instance,"Visible") then
+		instance["Visible"] = true
+	elseif has_property(instance,"Enabled") then
+		instance["Enabled"] = true
+	end
+end
+
+proton.unrender = function(instance)
+	if has_property(instance,"Visible") then
+		instance["Visible"] = false
+	elseif has_property(instance,"Enabled") then
+		instance["Enabled"] = false
+	end
+end
+
+proton.connect = function(instance,event,func)
+	if has_property(instance,event) then
+		return instance[event]:Connect(func)
+	elseif events[event] ~= nil then
+		local event_obj = Instance.new("BindableEvent")
+		events[event](instance,event_obj)
+		event_obj.Event:Connect(func)
+	end
+end
+
+return proton
