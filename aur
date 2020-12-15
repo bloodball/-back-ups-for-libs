@@ -145,17 +145,7 @@ local function initLibrary()
                     Text = "";
                     TextColor3 = Color3.fromRGB(255, 255, 255);
                     TextSize = 14.000;
-                    TextXAlignment = Enum.TextXAlignment.Left;
-                });
-                library:Create("ImageLabel", {
-                    Name = "icon";
-                    BackgroundTransparency = 1.000;
-                    Position = UDim2.new(0, 2, 0, 1);
-                    Size = UDim2.new(0, 24, 0, 24);
-                    Image = "http://www.roblox.com/asset/?id=2168261798";
-                   
-                    });
-                });
+                    TextXAlignment = Enum.TextXAlignment.Left
             });
             library:Create("Frame", {
                 Name = "border";
