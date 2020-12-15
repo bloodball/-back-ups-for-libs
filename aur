@@ -1,5 +1,5 @@
 local function initLibrary()
-    local library = {flags = {}, callbacks = {}, rainbowI = 0};
+    local library = {flags = {}, callbacks = {}, rainbowI = 1};
 
     local GetService = game.GetService;
     local Players = GetService(game, "Players");
