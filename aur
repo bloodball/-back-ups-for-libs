@@ -145,7 +145,19 @@ local function initLibrary()
                     Text = "";
                     TextColor3 = Color3.fromRGB(255, 255, 255);
                     TextSize = 14.000;
-                    TextXAlignment = Enum.TextXAlignment.Left
+                    TextXAlignment = Enum.TextXAlignment.Left;
+                });
+                library:Create("ImageLabel", {
+                    Name = "icon";
+                    BackgroundTransparency = 1.000;
+                    Position = UDim2.new(0, 2, 0, 1);
+                    Size = UDim2.new(0, 24, 0, 24);
+                    Image = "http://www.roblox.com/asset/?id=4645651350";
+                    library:Create("UIGradient", {
+                        Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(39, 133, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(210, 74, 255))};
+                        Rotation = 45;
+                    });
+                });
             });
             library:Create("Frame", {
                 Name = "border";
