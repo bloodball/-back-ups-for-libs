@@ -1,0 +1,858 @@
+local library = {
+				KeyBind = Enum.KeyCode.RightShift
+			}
+			local mouse = game.Players.LocalPlayer:GetMouse()
+			local uis = game:GetService("UserInputService")
+			local TweenService = game:GetService("TweenService")
+			local InsertedObjects = Instance.new("ScreenGui")
+			local MainContainer = Instance.new("Frame")
+			local TopFrame = Instance.new("Frame")
+			local TopFrameColors = Instance.new("UIGradient")
+			local TopFrameLine = Instance.new("Frame")
+			local TopFrameLineColor = Instance.new("UIGradient")
+			local SectionButtonsHolder = Instance.new("Frame")
+			local SectionButtonsLiter = Instance.new("UIListLayout")
+			local Close = Instance.new("TextButton")
+			local XColor = Instance.new("UIGradient")
+			local OriginalTitle = Instance.new("TextLabel")
+			local MainContainerColors = Instance.new("UIGradient")
+			local Sections = Instance.new("Folder")
+			InsertedObjects.Name = "InsertedObjects"
+			InsertedObjects.Parent = game.CoreGui
+			MainContainer.Name = "MainContainer"
+			MainContainer.Parent = InsertedObjects
+			MainContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			MainContainer.BorderColor3 = Color3.fromRGB(149, 241, 255)
+			MainContainer.BorderSizePixel = 0
+			MainContainer.Position = UDim2.new(0.5, -300, 0.5, -200)
+			MainContainer.Size = UDim2.new(0, 600, 0, 400)
+			MainContainer.Active = true
+			MainContainer.Draggable = true
+			TopFrame.Name = "TopFrame"
+			TopFrame.Parent = MainContainer
+			TopFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TopFrame.BorderSizePixel = 0
+			TopFrame.Size = UDim2.new(0, 600, 0, 55)
+			TopFrameColors.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27, 27, 27)),
+				ColorSequenceKeypoint.new(0.56, Color3.fromRGB(22, 22, 22)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 25, 25))
+			}
+			TopFrameColors.Rotation = 90
+			TopFrameColors.Name = "TopFrameColors"
+			TopFrameColors.Parent = TopFrame
+			TopFrameLine.Name = "TopFrameLine"
+			TopFrameLine.Parent = TopFrame
+			TopFrameLine.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TopFrameLine.BorderSizePixel = 0
+			TopFrameLine.Position = UDim2.new(0, 0, 0.290909111, 0)
+			TopFrameLine.Size = UDim2.new(0, 600, 0, 2)
+			TopFrameLineColor.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(26, 26, 26)),
+				ColorSequenceKeypoint.new(0.48, Color3.fromRGB(94, 94, 94)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(26, 26, 26))
+			}
+			TopFrameLineColor.Name = "TopFrameLineColor"
+			TopFrameLineColor.Parent = TopFrameLine
+			SectionButtonsHolder.Name = "SectionButtonsHolder"
+			SectionButtonsHolder.Parent = TopFrame
+			SectionButtonsHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			SectionButtonsHolder.BackgroundTransparency = 1.000
+			SectionButtonsHolder.BorderSizePixel = 0
+			SectionButtonsHolder.Position = UDim2.new(0.00999999978, 0, 0.327272713, 0)
+			SectionButtonsHolder.Size = UDim2.new(0, 594, 0, 37)
+			SectionButtonsLiter.Name = "SectionButtonsLiter"
+			SectionButtonsLiter.Parent = SectionButtonsHolder
+			SectionButtonsLiter.FillDirection = Enum.FillDirection.Horizontal
+			SectionButtonsLiter.SortOrder = Enum.SortOrder.LayoutOrder
+			SectionButtonsLiter.VerticalAlignment = Enum.VerticalAlignment.Center
+			Close.Name = "Close"
+			Close.Parent = TopFrame
+			Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Close.BackgroundTransparency = 1.000
+			Close.Position = UDim2.new(1, -16, 0, 0)
+			Close.Size = UDim2.new(0, 16, 0, 16)
+			Close.Font = Enum.Font.SourceSansSemibold
+			Close.Text = "X"
+			Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Close.TextSize = 14.000
+			Close.MouseButton1Down:connect(function()
+				game:GetService("CoreGui").InsertedObjects:Destroy()
+			end)
+			XColor.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(197, 197, 197))
+			}
+			XColor.Rotation = 90
+			XColor.Name = "XColor"
+			XColor.Parent = Close
+			OriginalTitle.Name = "OriginalTitle"
+			OriginalTitle.Parent = TopFrame
+			OriginalTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			OriginalTitle.BackgroundTransparency = 1.000
+			OriginalTitle.Position = UDim2.new(0.451666653, 0, 0, 0)
+			OriginalTitle.Size = UDim2.new(0, 58, 0, 16)
+			OriginalTitle.Font = Enum.Font.Gotham
+			OriginalTitle.Text = "CLOUD"
+			OriginalTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+			OriginalTitle.TextSize = 14.000
+			MainContainerColors.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(25, 25, 25)),
+				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(18, 18, 18))
+			}
+			MainContainerColors.Rotation = 90
+			MainContainerColors.Name = "MainContainerColors"
+			MainContainerColors.Parent = MainContainer
+			Sections.Name = "Sections"
+			Sections.Parent = MainContainer
+			function library:CreateSection(option)
+				option = option or {}
+				option.text = option.text or ""
+				local TextBounds = game:GetService("TextService"):GetTextSize(option.text, 18, Enum.Font.SourceSansSemibold, Vector2.new(math.huge, math.huge))
+				local Aimbot = Instance.new("TextButton")
+				Aimbot.Name = "Aimbot"
+				Aimbot.Parent = SectionButtonsHolder
+				Aimbot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Aimbot.BackgroundTransparency = 1.000
+				Aimbot.Position = UDim2.new(0, 0, 0.0945945978, 0)
+				Aimbot.Size = UDim2.new(0, TextBounds.X + 15, 0, 30)
+				Aimbot.Font = Enum.Font.SourceSansSemibold
+				Aimbot.Text = option.text
+				Aimbot.TextColor3 = Color3.fromRGB(155, 155, 155)
+				Aimbot.TextSize = 18
+				local SectionFrame = Instance.new("Frame")
+				SectionFrame.Name = "SectionFrame"
+				SectionFrame.Parent = Sections
+				SectionFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+				SectionFrame.BorderColor3 = Color3.fromRGB(77, 77, 77)
+				SectionFrame.Position = UDim2.new(0.5, -288, 0.5625, -161)
+				SectionFrame.Size = UDim2.new(0, 576, 0, 323)
+				SectionFrame.Visible = false
+				local nagars = Instance.new("Folder")
+				nagars.Name = "nagars"
+				nagars.Parent = SectionFrame
+				local NagarButtonsFrame = Instance.new("Frame")
+				NagarButtonsFrame.Name = "NagarButtonsFrame"
+				NagarButtonsFrame.Parent = SectionFrame
+				NagarButtonsFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+				NagarButtonsFrame.BorderColor3 = Color3.fromRGB(77, 77, 77)
+				NagarButtonsFrame.Size = UDim2.new(0, 576, 0, 30)
+				local NagarButtonLister = Instance.new("UIListLayout")
+				NagarButtonLister.Name = "NagarButtonLister"
+				NagarButtonLister.Parent = NagarButtonsFrame
+				NagarButtonLister.FillDirection = Enum.FillDirection.Horizontal
+				NagarButtonLister.SortOrder = Enum.SortOrder.LayoutOrder
+				local NagarButtonPadder = Instance.new("UIPadding")
+				NagarButtonPadder.Name = "NagarButtonPadder"
+				NagarButtonPadder.Parent = NagarButtonsFrame
+				NagarButtonPadder.PaddingLeft = UDim.new(0, 5)
+				Aimbot.MouseButton1Click:Connect(function()
+					for i, v in next, Sections:GetChildren() do
+						v.Visible = false
+					end
+					SectionFrame.Visible = true
+				end)
+				Aimbot.MouseEnter:Connect(function()
+					TweenService:Create(Aimbot, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+						TextColor3 = Color3.fromRGB(255, 255, 255)
+					}):Play()
+				end)
+				Aimbot.MouseLeave:Connect(function()
+					TweenService:Create(Aimbot, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+						TextColor3 = Color3.fromRGB(155, 155, 155)
+					}):Play()
+				end)
+				local s = {}
+				function s:CreateNagar(option)
+					option = option or {}
+					option.text = option.text or ""
+					local TextBounds = game:GetService("TextService"):GetTextSize(option.text, 18, Enum.Font.SourceSansSemibold, Vector2.new(math.huge, math.huge))
+					local Aimbot_2 = Instance.new("TextButton")
+					Aimbot_2.Name = "Aimbot"
+					Aimbot_2.Parent = NagarButtonsFrame
+					Aimbot_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					Aimbot_2.BackgroundTransparency = 1.000
+					Aimbot_2.Position = UDim2.new(0.00868055597, 0, 0, 0)
+					Aimbot_2.Size = UDim2.new(0, TextBounds.X + 15, 0, 30)
+					Aimbot_2.Font = Enum.Font.SourceSansSemibold
+					Aimbot_2.Text = option.text
+					Aimbot_2.TextColor3 = Color3.fromRGB(155, 155, 155)
+					Aimbot_2.TextSize = 18
+					local Nagars = Instance.new("Frame")
+					Nagars.Name = "Nagars"
+					Nagars.Parent = nagars
+					Nagars.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					Nagars.BackgroundTransparency = 1.000
+					Nagars.BorderSizePixel = 0
+					Nagars.Position = UDim2.new(0, 0, 0.0928792581, 0)
+					Nagars.Size = UDim2.new(0, 576, 0, 293)
+					local NagarLister = Instance.new("UIListLayout")
+					NagarLister.Name = "NagarLister"
+					NagarLister.Parent = Nagars
+					NagarLister.FillDirection = Enum.FillDirection.Horizontal
+					NagarLister.SortOrder = Enum.SortOrder.LayoutOrder
+					NagarLister.VerticalAlignment = Enum.VerticalAlignment.Center
+					NagarLister.Padding = UDim.new(0, 10)
+					local NagarPadder = Instance.new("UIPadding")
+					NagarPadder.Name = "NagarPadder"
+					NagarPadder.Parent = Nagars
+					NagarPadder.PaddingLeft = UDim.new(0, 8)
+					Aimbot_2.MouseButton1Click:Connect(function()
+						for i, v in next, nagars:GetChildren() do
+							v.Visible = false
+						end
+						Nagars.Visible = true
+					end)
+					Aimbot_2.MouseEnter:Connect(function()
+						TweenService:Create(Aimbot_2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+							TextColor3 = Color3.fromRGB(255, 255, 255)
+						}):Play()
+					end)
+					Aimbot_2.MouseLeave:Connect(function()
+						TweenService:Create(Aimbot_2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+							TextColor3 = Color3.fromRGB(155, 155, 155)
+						}):Play()
+					end)
+					local a = {}
+					function a:CreateWindow(option)
+						option = option or {}
+						option.text = option.text or ""
+						local TextBounds = game:GetService("TextService"):GetTextSize(option.text, 14, Enum.Font.SourceSansLight, Vector2.new(math.huge, math.huge))
+						local NagarWindow = Instance.new("Frame")
+						NagarWindow.Name = "NagarWindow"
+						NagarWindow.Parent = Nagars
+						NagarWindow.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+						NagarWindow.BorderColor3 = Color3.fromRGB(77, 77, 77)
+						NagarWindow.Position = UDim2.new(-0.107638888, 0, 0.046075087, 0)
+						NagarWindow.Size = UDim2.new(0, 180, 0, 268)
+						Nagars.Visible = false
+						local NagarText = Instance.new("TextLabel")
+						NagarText.Name = "NagarText"
+						NagarText.Parent = NagarWindow
+						NagarText.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+						NagarText.BorderSizePixel = 0
+						NagarText.Position = UDim2.new(0.622, -22, 0, 0)
+						NagarText.Size = UDim2.new(0, TextBounds.X + 10, 0, 15)
+						NagarText.Font = Enum.Font.SourceSansLight
+						NagarText.Text = option.text
+						NagarText.TextColor3 = Color3.fromRGB(255, 255, 255)
+						NagarText.TextSize = 14.000
+						NagarText.AnchorPoint = Vector2.new(0.5, 0.5)
+						local Features = Instance.new("Frame")
+						Features.Name = "Features"
+						Features.Parent = NagarWindow
+						Features.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						Features.BackgroundTransparency = 1.000
+						Features.Position = UDim2.new(0, 0, 0.0298507456, 0)
+						Features.Size = UDim2.new(0, 180, 0, 260)
+						local UIListLayout = Instance.new("UIListLayout")
+						UIListLayout.Parent = Features
+						UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+						local Nig = {}
+						function Nig:CreateToggle(option)
+							option = option or {}
+							option.text = option.text or ""
+							option.callback = option.callback or function()
+							end
+							local Toggle = Instance.new("TextButton")
+							local FrameToggled = Instance.new("ImageLabel")
+							local Inner = Instance.new("ImageLabel")
+							local Checked = Instance.new("ImageLabel")
+							local ToggleText = Instance.new("TextLabel")
+							Toggle.Name = "Toggle"
+							Toggle.Parent = Features
+							Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Toggle.BackgroundTransparency = 1.000
+							Toggle.Position = UDim2.new(1, -180, 0.5, -12)
+							Toggle.Size = UDim2.new(0, 180, 0, 25)
+							Toggle.Font = Enum.Font.SourceSans
+							Toggle.Text = ""
+							Toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Toggle.TextSize = 14.000
+							FrameToggled.Name = "FrameToggled"
+							FrameToggled.Parent = Toggle
+							FrameToggled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							FrameToggled.BackgroundTransparency = 1.000
+							FrameToggled.Position = UDim2.new(0.961111128, -20, 0.539999962, -10)
+							FrameToggled.Size = UDim2.new(0, 20, 0, 20)
+							FrameToggled.Image = "rbxassetid://3570695787"
+							FrameToggled.ImageColor3 = Color3.fromRGB(35, 35, 35)
+							FrameToggled.ScaleType = Enum.ScaleType.Slice
+							FrameToggled.SliceCenter = Rect.new(100, 100, 100, 100)
+							FrameToggled.SliceScale = 0.040
+							Inner.Name = "Inner"
+							Inner.Parent = FrameToggled
+							Inner.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Inner.BackgroundTransparency = 1.000
+							Inner.Position = UDim2.new(0.5, -8, 0.5, -8)
+							Inner.Size = UDim2.new(0, 16, 0, 16)
+							Inner.ZIndex = 1
+							Inner.Image = "rbxassetid://3570695787"
+							Inner.ImageColor3 = Color3.fromRGB(25, 25, 25)
+							Inner.ScaleType = Enum.ScaleType.Slice
+							Inner.SliceCenter = Rect.new(100, 100, 100, 100)
+							Inner.SliceScale = 0.040
+							Checked.Name = "Checked"
+							Checked.Parent = FrameToggled
+							Checked.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Checked.BackgroundTransparency = 1.000
+							Checked.Position = UDim2.new(0.5, -5, 0.5, -5)
+							Checked.Size = UDim2.new(0, 10, 0, 10)
+							Checked.Image = "rbxassetid://4919148038"
+							Checked.SliceScale = 5.000
+							Checked.ImageTransparency = 1
+							Checked.ImageColor3 = Color3.fromRGB(155, 155, 155)
+							ToggleText.Name = "ToggleText"
+							ToggleText.Parent = Toggle
+							ToggleText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							ToggleText.BackgroundTransparency = 1.000
+							ToggleText.Position = UDim2.new(0, 0, 0.171428218, 0)
+							ToggleText.Size = UDim2.new(0, 118, 0, 18)
+							ToggleText.Font = Enum.Font.SourceSans
+							ToggleText.Text = "   "..option.text
+							ToggleText.TextColor3 = Color3.fromRGB(155, 155, 155)
+							ToggleText.TextSize = 15.000
+							ToggleText.TextXAlignment = Enum.TextXAlignment.Left
+							local toggled = false
+							Toggle.MouseEnter:Connect(function()
+								TweenService:Create(ToggleText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+								TweenService:Create(Checked, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									ImageColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Toggle.MouseLeave:Connect(function()
+								TweenService:Create(ToggleText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+								TweenService:Create(Checked, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									ImageColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+							Toggle.MouseButton1Click:Connect(function()
+								if toggled then
+									toggled = false
+									TweenService:Create(Checked, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										ImageTransparency = 1
+									}):Play()
+								elseif toggled == false then
+									toggled	= true
+									TweenService:Create(Checked, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										ImageTransparency = 0
+									}):Play()
+								end
+								option.callback(toggled)
+							end)
+						end
+						function Nig:CreateDropdown(option)
+							option.text = option.text or ""
+							option.list = option.list or {}
+							option.callback = option.callback or function()
+							end
+							local BodyYSize = 10
+							local Dropdown = Instance.new("TextButton")
+							local DropdownText = Instance.new("TextLabel")
+							local DropdownList = Instance.new("Frame")
+							local ChosenDropdown = Instance.new("TextLabel")
+							local UIListLayout = Instance.new("UIListLayout")
+							UIListLayout.Parent = DropdownList
+							UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+							Dropdown.Name = "Dropdown"
+							Dropdown.Parent = Features
+							Dropdown.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Dropdown.BackgroundTransparency = 1.000
+							Dropdown.Size = UDim2.new(0, 180, 0, 40)
+							Dropdown.Font = Enum.Font.SourceSans
+							Dropdown.Text = ""
+							Dropdown.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Dropdown.TextSize = 14.000
+							DropdownText.Name = "DropdownText"
+							DropdownText.Parent = Dropdown
+							DropdownText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							DropdownText.BackgroundTransparency = 1.000
+							DropdownText.Position = UDim2.new(0, 0, 0.25, -12)
+							DropdownText.Size = UDim2.new(0, 118, 0, 25)
+							DropdownText.Font = Enum.Font.SourceSans
+							DropdownText.Text = "   " .. option.text
+							DropdownText.TextColor3 = Color3.fromRGB(178, 178, 178)
+							DropdownText.TextSize = 15.000
+							DropdownText.TextXAlignment = Enum.TextXAlignment.Left
+							DropdownList.Name = "DropdownList"
+							DropdownList.Parent = Dropdown
+							DropdownList.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							DropdownList.BorderColor3 = Color3.fromRGB(35, 35, 35)
+							DropdownList.BorderSizePixel = 2
+							DropdownList.Position = UDim2.new(0.0388888903, 0, 0.574999988, 0)
+							DropdownList.Size = UDim2.new(0, 166, 0, 10)
+							DropdownList.ZIndex = 2
+							DropdownList.ClipsDescendants = true
+							ChosenDropdown.Name = "ChosenDropdown"
+							ChosenDropdown.Parent = DropdownList
+							ChosenDropdown.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							ChosenDropdown.BackgroundTransparency = 1.000
+							ChosenDropdown.Size = UDim2.new(0, 166, 0, 10)
+							ChosenDropdown.Font = Enum.Font.SourceSans
+							ChosenDropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+							ChosenDropdown.TextSize = 14.000
+							ChosenDropdown.ZIndex = 2
+							ChosenDropdown.Text = ""
+							Dropdown.MouseButton1Click:Connect(function()
+								TweenService:Create(DropdownList, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									Size = UDim2.new(0, 166, 0, BodyYSize)
+								}):Play()
+								ChosenDropdown.Text = "..."
+							end)
+							Dropdown.MouseEnter:Connect(function()
+								TweenService:Create(ChosenDropdown, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+								TweenService:Create(DropdownText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Dropdown.MouseLeave:Connect(function()
+								TweenService:Create(ChosenDropdown, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+								TweenService:Create(DropdownText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+							for i, v in next, option.list do
+								local OPTION = Instance.new("TextButton")
+								OPTION.Name = v
+								OPTION.Parent = DropdownList
+								OPTION.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+								OPTION.BackgroundTransparency = 1.000
+								OPTION.Position = UDim2.new(0, 0, 0.0892857164, 0)
+								OPTION.Size = UDim2.new(0, 166, 0, 25)
+								OPTION.ZIndex = 2
+								OPTION.Font = Enum.Font.SourceSans
+								OPTION.TextColor3 = Color3.fromRGB(255, 255, 255)
+								OPTION.TextSize = 14.000
+								OPTION.Text = v
+								BodyYSize = BodyYSize + 25
+								OPTION.MouseButton1Click:Connect(function()
+									TweenService:Create(DropdownList, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										Size = UDim2.new(0, 166, 0, 10)
+									}):Play()
+									option.callback(v)
+									ChosenDropdown.Text = v
+								end)
+								OPTION.MouseEnter:Connect(function()
+									TweenService:Create(OPTION, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										TextColor3 = Color3.fromRGB(255, 255, 255)
+									}):Play()
+								end)
+								OPTION.MouseLeave:Connect(function()
+									TweenService:Create(OPTION, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										TextColor3 = Color3.fromRGB(155, 155, 155)
+									}):Play()
+								end)
+							end
+						end
+						function Nig:CreateSlider(option)
+							option.text = option.text or ""
+							option.minval = option.minval or 0
+							option.maxval = option.maxval or 0
+							option.callback = option.callback or function()
+							end
+							local Value;
+							local Slider = Instance.new("TextButton")
+							local SliderText = Instance.new("TextLabel")
+							local SliderLine = Instance.new("Frame")
+							local SliderInner = Instance.new("Frame")
+							local SliderValue = Instance.new("TextLabel")
+							Slider.Name = "Slider"
+							Slider.Parent = Features
+							Slider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Slider.BackgroundTransparency = 1.000
+							Slider.Size = UDim2.new(0, 180, 0, 40)
+							Slider.Font = Enum.Font.SourceSans
+							Slider.Text = ""
+							Slider.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Slider.TextSize = 14.000
+							SliderText.Name = "SliderText"
+							SliderText.Parent = Slider
+							SliderText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							SliderText.BackgroundTransparency = 1.000
+							SliderText.Position = UDim2.new(0, 0, 0.25, -12)
+							SliderText.Size = UDim2.new(0, 118, 0, 25)
+							SliderText.Font = Enum.Font.SourceSans
+							SliderText.Text = "   " .. option.text
+							SliderText.TextColor3 = Color3.fromRGB(178, 178, 178)
+							SliderText.TextSize = 15.000
+							SliderText.TextXAlignment = Enum.TextXAlignment.Left
+							SliderLine.Name = "SliderLine"
+							SliderLine.Parent = Slider
+							SliderLine.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							SliderLine.BorderColor3 = Color3.fromRGB(35, 35, 35)
+							SliderLine.BorderSizePixel = 2
+							SliderLine.Position = UDim2.new(0.0388888903, 0, 0.574999988, 0)
+							SliderLine.Size = UDim2.new(0, 166, 0, 10)
+							SliderInner.Name = "SliderInner"
+							SliderInner.Parent = SliderLine
+							SliderInner.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+							SliderInner.BorderSizePixel = 0
+							SliderInner.Size = UDim2.new(0, 0, 0, 10)
+							SliderValue.Name = "SliderValue"
+							SliderValue.Parent = Slider
+							SliderValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							SliderValue.BackgroundTransparency = 1.000
+							SliderValue.Position = UDim2.new(0.0388888903, 0, 0.574999988, 0)
+							SliderValue.Size = UDim2.new(0, 166, 0, 10)
+							SliderValue.Font = Enum.Font.SourceSans
+							SliderValue.Text = option.minval
+							SliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
+							SliderValue.TextSize = 13
+							SliderValue.TextTransparency = 1
+							local down = false
+							Slider.MouseButton1Down:Connect(function()
+								down = true
+								TweenService:Create(SliderValue, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextTransparency = 0
+								}):Play()
+								Value = math.floor((((tonumber(option.maxval) - tonumber(option.minval)) / 166) * SliderInner.AbsoluteSize.X) + tonumber(option.minval)) or 0
+								SliderValue.Text = Value
+								pcall(option.callback, Value)
+								SliderInner:TweenSize(UDim2.new(0, math.clamp(mouse.X - SliderInner.AbsolutePosition.X, 0, 166), 0, 10), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, .07)
+								while game:GetService("RunService").RenderStepped:wait() and down do
+									Value = math.floor((((tonumber(option.maxval) - tonumber(option.minval)) / 166) * SliderInner.AbsoluteSize.X) + tonumber(option.minval)) or 0
+									SliderValue.Text = Value
+									pcall(option.callback, Value)
+									SliderInner:TweenSize(UDim2.new(0, math.clamp(mouse.X - SliderInner.AbsolutePosition.X, 0, 166), 0, 10), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, .07)
+								end
+							end)
+							uis.InputEnded:connect(function(key)
+								if key.UserInputType == Enum.UserInputType.MouseButton1 and down then
+									down = false
+									TweenService:Create(SliderValue, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+										TextTransparency = 1
+									}):Play()
+									Value = math.floor((((tonumber(option.maxval) - tonumber(option.minval)) / 166) * SliderInner.AbsoluteSize.X) + tonumber(option.minval)) or 0
+									SliderValue.Text = Value
+									pcall(option.callback, Value)
+									SliderInner:TweenSize(UDim2.new(0, math.clamp(mouse.X - SliderInner.AbsolutePosition.X, 0, 166), 0, 10), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0.1)
+								end
+							end)
+							Slider.MouseEnter:Connect(function()
+								TweenService:Create(SliderText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Slider.MouseLeave:Connect(function()
+								TweenService:Create(SliderText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+						end
+						function Nig:CreateBind(option)
+							option.text = option.text or ""
+							option.bind = option.bind or nil
+							local binding
+							local holding
+							local loop
+							local text = string.match(option.key, "Mouse") and string.sub(option.key, 1, 5) .. string.sub(option.key, 12, 13) or option.key
+							local inContact
+							local Keybind = Instance.new("TextButton")
+							local KeybingText = Instance.new("TextLabel")
+							local KeyBindButton = Instance.new("TextButton")
+							Keybind.Name = "Keybind"
+							Keybind.Parent = Features
+							Keybind.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Keybind.BackgroundTransparency = 1.000
+							Keybind.Position = UDim2.new(0, 0, 0.403846145, 0)
+							Keybind.Size = UDim2.new(0, 180, 0, 30)
+							Keybind.Font = Enum.Font.SourceSans
+							Keybind.Text = ""
+							Keybind.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Keybind.TextSize = 14.000
+							KeybingText.Name = "KeybingText"
+							KeybingText.Parent = Keybind
+							KeybingText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							KeybingText.BackgroundTransparency = 1.000
+							KeybingText.Position = UDim2.new(0, 0, 0.466666669, -12)
+							KeybingText.Size = UDim2.new(0, 118, 0, 25)
+							KeybingText.Font = Enum.Font.SourceSans
+							KeybingText.Text = "   " .. option.text
+							KeybingText.TextColor3 = Color3.fromRGB(178, 178, 178)
+							KeybingText.TextSize = 15.000
+							KeybingText.TextXAlignment = Enum.TextXAlignment.Left
+							local TextBounds = game:GetService("TextService"):GetTextSize(text, 14, Enum.Font.SourceSansSemibold, Vector2.new(math.huge, math.huge))
+							KeyBindButton.Name = "KeyBindButton"
+							KeyBindButton.Parent = Keybind
+							KeyBindButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							KeyBindButton.BorderColor3 = Color3.fromRGB(77, 77, 77)
+							KeyBindButton.Position = UDim2.new(0.961, 0, 0.458, 0)
+							KeyBindButton.Size = UDim2.new(0, TextBounds.X + 15, 0, 20)
+							KeyBindButton.Font = Enum.Font.SourceSans
+							KeyBindButton.Text = text
+							KeyBindButton.TextColor3 = Color3.fromRGB(178, 178, 178)
+							KeyBindButton.TextSize = 14.000
+							KeyBindButton.AnchorPoint = Vector2.new(1, 0.5)
+							Keybind.MouseEnter:Connect(function()
+								TweenService:Create(KeybingText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Keybind.MouseLeave:Connect(function()
+								TweenService:Create(KeybingText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+							local UnknownKeys = {
+								Enum.KeyCode.Unknown,
+								Enum.KeyCode.W,
+								Enum.KeyCode.A,
+								Enum.KeyCode.S,
+								Enum.KeyCode.D,
+								Enum.KeyCode.Slash,
+								Enum.KeyCode.Tab,
+								Enum.KeyCode.Backspace,
+								Enum.KeyCode.Escape
+							}
+							local MouseButtons = {
+								Enum.UserInputType.MouseButton1,
+								Enum.UserInputType.MouseButton2,
+								Enum.UserInputType.MouseButton3
+							}
+							local function keyCheck(a, b)
+								for _, v in next, b do
+									if v == a then
+										return true
+									end
+								end
+							end
+							Keybind.InputBegan:connect(function(input)
+								if input.UserInputType == Enum.UserInputType.MouseMovement then
+									inContact = true
+									if not binding then
+										TweenService:Create(KeyBindButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+											BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+										}):Play()
+									end
+								end
+							end)
+							Keybind.InputEnded:connect(function(input)
+								if input.UserInputType == Enum.UserInputType.MouseButton1 then
+									binding = true
+									KeyBindButton.Text = "..."
+									TweenService:Create(KeyBindButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+										BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+									}):Play()
+								end
+								if input.UserInputType == Enum.UserInputType.MouseMovement then
+									inContact = false
+									if not binding then
+										TweenService:Create(KeyBindButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+											BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+										}):Play()
+									end
+								end
+							end)
+							uis.InputBegan:connect(function(input)
+								if uis:GetFocusedTextBox() then
+									return
+								end
+								if (input.KeyCode.Name == option.key or input.UserInputType.Name == option.key) and not binding then
+									if option.hold then
+										loop = game:GetService("RunService").Heartbeat:connect(function()
+											if binding then
+												option.callback(true)
+												loop:Disconnect()
+												loop = nil
+											else
+												option.callback()
+											end
+										end)
+									else
+										option.callback()
+									end
+								elseif binding then
+									local key
+									pcall(function()
+										if not keyCheck(input.KeyCode, UnknownKeys) then
+											key = input.KeyCode
+										end
+									end)
+									pcall(function()
+										if keyCheck(input.UserInputType, MouseButtons) and not key then
+											key = input.UserInputType
+										end
+									end)
+									key = key or option.key
+									option:SetKey(key)
+								end
+							end)
+							uis.InputEnded:connect(function(input)
+								if input.KeyCode.Name == option.key or input.UserInputType.Name == option.key or input.UserInputType.Name == "MouseMovement" then
+									if loop then
+										loop:Disconnect()
+										loop = nil
+										option.callback(true)
+									end
+								end
+							end)
+							function option:SetKey(key)
+								binding = false
+								if loop then
+									loop:Disconnect()
+									loop = nil
+								end
+								self.key = key or self.key
+								self.key = self.key.Name or self.key
+								if string.match(self.key, "Mouse") then
+									KeyBindButton.Text = string.sub(self.key, 1, 5) .. string.sub(self.key, 12, 13)
+								else
+									KeyBindButton.Text = self.key
+								end
+								TweenService:Create(KeyBindButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+									BackgroundColor3 = inContact and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(25, 25, 25)
+								}):Play()
+							end
+						end
+						function Nig:CreateButton(option)
+							option.text = option.text or ""
+							option.callback = option.callback or function()
+							end
+							local Button = Instance.new("TextButton")
+							local ButtonImage = Instance.new("ImageButton")
+							local ButtonText = Instance.new("TextLabel")
+							Button.Name = "Button"
+							Button.Parent = Features
+							Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Button.BackgroundTransparency = 1.000
+							Button.Position = UDim2.new(0, 0, 0.519230783, 0)
+							Button.Size = UDim2.new(0, 180, 0, 30)
+							Button.Font = Enum.Font.SourceSans
+							Button.Text = ""
+							Button.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Button.TextSize = 14.000
+							ButtonImage.Name = "ButtonImage"
+							ButtonImage.Parent = Button
+							ButtonImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							ButtonImage.BackgroundTransparency = 1.000
+							ButtonImage.Position = UDim2.new(0.5, -83, 0.5, -10)
+							ButtonImage.Size = UDim2.new(0, 166, 0, 20)
+							ButtonImage.Image = "rbxassetid://3570695787"
+							ButtonImage.ImageColor3 = Color3.fromRGB(25, 25, 25)
+							ButtonImage.ScaleType = Enum.ScaleType.Slice
+							ButtonImage.SliceCenter = Rect.new(100, 100, 100, 100)
+							ButtonImage.SliceScale = 0.001
+							ButtonText.Name = "ButtonText"
+							ButtonText.Parent = ButtonImage
+							ButtonText.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							ButtonText.BorderColor3 = Color3.fromRGB(77, 77, 77)
+							ButtonText.Size = UDim2.new(0, 166, 0, 20)
+							ButtonText.Font = Enum.Font.SourceSans
+							ButtonText.Text = option.text
+							ButtonText.TextColor3 = Color3.fromRGB(178, 178, 178)
+							ButtonText.TextSize = 14.000
+							local inContact
+							local clicking
+							ButtonImage.InputBegan:connect(function(input)
+								if input.UserInputType == Enum.UserInputType.MouseButton1 then
+									clicking = true
+									TweenService:Create(ButtonText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+										BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+									}):Play()
+									option.callback()
+								end
+								if input.UserInputType == Enum.UserInputType.MouseMovement then
+									inContact = true
+									TweenService:Create(ButtonText, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+										BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+									}):Play()
+								end
+							end)
+							ButtonImage.InputEnded:connect(function(input)
+								if input.UserInputType == Enum.UserInputType.MouseButton1 then
+									clicking = false
+									if inContact then
+										TweenService:Create(ButtonText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+											BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+										}):Play()
+									else
+										TweenService:Create(ButtonText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+											BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+										}):Play()
+									end
+								end
+								if input.UserInputType == Enum.UserInputType.MouseMovement then
+									inContact = false
+									if not clicking then
+										TweenService:Create(ButtonImage, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+											BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+										}):Play()
+									end
+								end
+							end)
+							Button.MouseEnter:Connect(function()
+								TweenService:Create(ButtonText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Button.MouseLeave:Connect(function()
+								TweenService:Create(ButtonText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+						end
+						function Nig:CreateTextBox(option)
+							local Textbox = Instance.new("TextButton")
+							local TextBoxText = Instance.new("TextBox")
+							Textbox.Name = "Textbox"
+							Textbox.Parent = Features
+							Textbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+							Textbox.BackgroundTransparency = 1.000
+							Textbox.Position = UDim2.new(0, 0, 0.519230783, 0)
+							Textbox.Size = UDim2.new(0, 180, 0, 30)
+							Textbox.Font = Enum.Font.SourceSans
+							Textbox.Text = ""
+							Textbox.TextColor3 = Color3.fromRGB(0, 0, 0)
+							Textbox.TextSize = 14.000
+							TextBoxText.Name = "TextBoxText"
+							TextBoxText.Parent = Textbox
+							TextBoxText.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							TextBoxText.BorderColor3 = Color3.fromRGB(77, 77, 77)
+							TextBoxText.Position = UDim2.new(0.5, -83, 0.5, -10)
+							TextBoxText.Size = UDim2.new(0, 166, 0, 20)
+							TextBoxText.Font = Enum.Font.SourceSans
+							TextBoxText.PlaceholderColor3 = Color3.fromRGB(155, 155, 155)
+							TextBoxText.PlaceholderText = option.text
+							TextBoxText.Text = ""
+							TextBoxText.TextColor3 = Color3.fromRGB(0, 0, 0)
+							TextBoxText.TextSize = 14.000
+							TextBoxText.Focused:Connect(function()
+								TextBoxText.TextColor3 = Color3.fromRGB(255, 255, 255)
+							end)
+							TextBoxText.FocusLost:Connect(function(enbter)
+								if enbter then
+									TextBoxText.TextColor3 = Color3.fromRGB(155, 155, 155)
+									option.callback(TextBoxText.Text)
+								end
+							end)
+							Textbox.MouseEnter:Connect(function()
+								TweenService:Create(TextBoxText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+								TweenService:Create(TextBoxText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									PlaceholderColor3 = Color3.fromRGB(255, 255, 255)
+								}):Play()
+							end)
+							Textbox.MouseLeave:Connect(function()
+								TweenService:Create(TextBoxText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									TextColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+								TweenService:Create(TextBoxText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+									PlaceholderColor3 = Color3.fromRGB(155, 155, 155)
+								}):Play()
+							end)
+						end
+						return Nig;
+					end
+					return a;
+				end
+				return s;
+			end
